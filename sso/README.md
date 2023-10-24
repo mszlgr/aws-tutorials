@@ -1,4 +1,4 @@
-TODO
+To list accounts/list roles/assume role using sso:
 ```
  $ aws configure sso --profile default --endpoint-url  --yes
  
@@ -19,3 +19,10 @@ TODO
 
  $ aws sts get-caller-identity
  ```
+
+What role was assumed can be inspected using CloudInsights:
+```
+filter (eventName =~ /Assume/ and requestParameters.principalTags.companylogin =~ /szlagor/)
+|fields @timestamp, requestParameters.principalTags.companylogin, requestParameters.durationSeconds, responseElements.assumedRoleUser.arn
+| sort @timestamp desc
+```
